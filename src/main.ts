@@ -12,6 +12,11 @@ async function bootstrap() {
 
   app.use(cookieParser())
 
+  app.enableCors({
+    origin: ["http://192.168.1.7:3000" , "http://localhost:3000" , "http://atozerserver.3bbddns.com:21754"],
+    credentials: true
+  })
+
   const config = new DocumentBuilder()
     .setTitle('Atozer')
     .setDescription('The API description')

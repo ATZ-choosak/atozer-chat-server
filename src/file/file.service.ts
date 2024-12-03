@@ -5,20 +5,15 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class FileService {
+  constructor(@InjectModel(File.name) private fileModel: Model<File>) {}
 
-    constructor(
-        @InjectModel(File.name) private fileModel: Model<File>
-    ) { }
+  async findById(id: string): Promise<FileDocument> {
+    const result = await this.fileModel.findById(id).exec();
+    return result;
+  }
 
-    async findById(id: string): Promise<FileDocument> {
-        const result = await this.fileModel.findById(id).exec()
-        return result
-    }
-
-    async createFile(path: string): Promise<FileDocument> {
-        const createdFile = new this.fileModel({ path })
-        return { message: "Upload file successfully.", ...createdFile.save() }
-
-    }
-
+  async createFile(path: string): Promise<FileDocument> {
+    const createdFile = new this.fileModel({ path });
+    return createdFile.save();
+  }
 }
